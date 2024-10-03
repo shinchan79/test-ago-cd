@@ -5,7 +5,7 @@ metadata:
   namespace: keycloak
 spec:
   ports:
-  - port: 8080
-    targetPort: 8080  # Sửa lại thụt lề ở đây
+  - port: 8180
+    targetPort: 8180
   selector:
     app: keycloak

@@ -24,10 +24,12 @@ spec:
               value: "admin"
             - name: KC_PROXY
               value: "edge"
+            - name: KC_HTTP_PORT
+              value: "8180"
           ports:
             - name: http
-              containerPort: 8080
+              containerPort: 8180
           readinessProbe:
             httpGet:
               path: /realms/master
-              port: 8080
+              port: 8180
