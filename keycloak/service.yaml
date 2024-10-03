@@ -5,10 +5,9 @@ metadata:
   namespace: keycloak
 spec:
   type: NodePort
+  ports:
+  - port: 8180
+    targetPort: 8180
+    nodePort: 30008
   selector:
     app: keycloak
-  ports:
-    - protocol: TCP
-      port: 8180
-      targetPort: 8180
-      nodePort: 30008
