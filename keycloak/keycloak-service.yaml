@@ -4,10 +4,9 @@ metadata:
   name: keycloak
   namespace: keycloak
 spec:
-  type: NodePort  # Đảm bảo rằng kiểu là NodePort
+  type: LoadBalancer
   ports:
   - port: 8180
     targetPort: 8180
-    nodePort: 32762  # Cổng mà bạn muốn sử dụng để truy cập
   selector:
     app: keycloak
