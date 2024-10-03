@@ -6,6 +6,6 @@ metadata:
 spec:
   ports:
   - port: 8080
-     targetPort: 8080
+    targetPort: 8080  # Sửa lại thụt lề ở đây
   selector:
     app: keycloak
