@@ -3,6 +3,8 @@ kind: Deployment
 metadata:
   name: keycloak
   namespace: keycloak
+  labels:
+    app: keycloak
 spec:
   replicas: 1
   selector:
@@ -14,22 +16,40 @@ spec:
         app: keycloak
     spec:
       containers:
-        - name: keycloak
-          image: quay.io/keycloak/keycloak:24.0.5
-          args: ["start-dev"]
-          env:
-            - name: KEYCLOAK_ADMIN
-              value: "admin"
-            - name: KEYCLOAK_ADMIN_PASSWORD
-              value: "admin"
-            - name: KC_PROXY
-              value: "edge"
-            - name: KC_HTTP_PORT
-              value: "8180"
-          ports:
-            - name: http
-              containerPort: 8180
-          readinessProbe:
-            httpGet:
-              path: /realms/master
-              port: 8180
+      - name: keycloak
+        image: quay.io/keycloak/keycloak:24.0.5
+        args: ["start-dev"]
+        ports:
+        - name: http
+          containerPort: 8180
+        env:
+        - name: KEYCLOAK_ADMIN
+          value: "admin"
+        - name: KEYCLOAK_ADMIN_PASSWORD
+          value: "admin"
+        - name: KC_PROXY
+          value: "edge"
+        - name: KC_HTTP_PORT
+          value: "8180"
+        - name: KC_HOSTNAME_STRICT
+          value: "false"
+        - name: KC_HOSTNAME_STRICT_HTTPS
+          value: "false"
+        - name: KC_HTTP_ENABLED
+          value: "true"
+        - name: KC_PROXY_ADDRESS_FORWARDING
+          value: "true"
+        readinessProbe:
+          httpGet:
+            path: /realms/master
+            port: 8180
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          failureThreshold: 3
+        resources:
+          limits:
+            cpu: "1"
+            memory: "1024Mi"
+          requests:
+            cpu: "500m"
+            memory: "512Mi"
